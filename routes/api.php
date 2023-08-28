@@ -21,3 +21,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/products',[ProductController::class,'products']);
 Route::get('/products/recommended',[ProductController::class,'recommended']);
 Route::get('/products/featured',[ProductController::class,'featured']);
+Route::get('/products/{id}',[ProductController::class,'product']);

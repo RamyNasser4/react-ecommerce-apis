@@ -20,4 +20,8 @@ class ProductController extends Controller
         $featuredproducts = Category::where('category_name','Featured')->first()->products;
         return response($featuredproducts,201);
     }
+    public function product($id){
+        $product = Product::find($id);
+        return response($product,201);
+    }
 }
