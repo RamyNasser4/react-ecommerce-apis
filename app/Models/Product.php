@@ -12,7 +12,7 @@ class Product extends Model
     use HasFactory;
     protected $table = 'products';
     public function colors(){
-        return $this->belongsTo(Color::class);
+        return $this->belongsToMany(Color::class);
     }
     public function categories(){
         return $this->belongsTo(Category::class);

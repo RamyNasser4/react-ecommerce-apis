@@ -22,6 +22,9 @@ class ProductController extends Controller
     }
     public function product($id){
         $product = Product::find($id);
-        return response($product,201);
+        $colors = Product::where('id',$id)->first()->colors;
+        $response = ['product' => $product,
+                     'colors' =>$colors];
+        return response($response,201);
     }
 }

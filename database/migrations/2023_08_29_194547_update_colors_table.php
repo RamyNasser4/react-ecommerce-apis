@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colors', function (Blueprint $table) {
-            $table->id();
-            $table->string('color');
-            $table->string('color_hex');
+        Schema::table('color', function (Blueprint $table) {
         });
+        Schema::rename('color','colors');
+        Schema::table('product_colors', function (Blueprint $table) {
+        });
+        Schema::rename('product_colors','color_product');
     }
 
     /**
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colors');
+        //
     }
 };
