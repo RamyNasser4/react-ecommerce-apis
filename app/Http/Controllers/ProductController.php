@@ -10,7 +10,12 @@ class ProductController extends Controller
 {
     public function products(){
         $products = Product::all();
-        return response($products,201);
+        $colors = array();
+        foreach($products as $product){
+            array_push($colors,$product->colors->first());
+        }
+        return response(['products' => $products,
+                         'colors' => $colors],201);
     }
     public function recommended(){
         $recommendedproducts = Category::where('category_name','Recommended')->first()->products;
