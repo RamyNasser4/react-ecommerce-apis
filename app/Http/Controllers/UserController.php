@@ -25,7 +25,7 @@ class UserController extends Controller
     }
     public function signin(signinRequest $request){
         $user = User::where('email',$request->email)->first();
-        if(!$user || Hash::check($request->password,$user->password)){
+        if(!$user || !Hash::check($request->password,$user->password)){
             return response([
                 'message' => 'Bad Credentials',401
             ]);
