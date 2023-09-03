@@ -37,5 +37,11 @@ class UserController extends Controller
         ];
         return response($response,201);
     }
+    public function signout(Request $request){
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'Logged out'
+        ];
+    }
     
 }

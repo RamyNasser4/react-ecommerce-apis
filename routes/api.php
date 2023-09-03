@@ -25,3 +25,6 @@ Route::get('/products/featured',[ProductController::class,'featured']);
 Route::get('/products/{id}',[ProductController::class,'product']);
 Route::post('/signup',[UserController::class,'signup']);
 Route::post('/signin',[UserController::class,'signin']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/signout',[UserController::class,'signout']);
+});
