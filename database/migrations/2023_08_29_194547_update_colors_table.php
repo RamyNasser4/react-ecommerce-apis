@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('color', function (Blueprint $table) {
+        /* Schema::table('color', function (Blueprint $table) {
         });
         Schema::rename('color','colors');
         Schema::table('product_colors', function (Blueprint $table) {
         });
-        Schema::rename('product_colors','color_product');
+        Schema::rename('product_colors','color_product'); */
     }
 
     /**
