@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\createUserRequest;
 use App\Http\Requests\editUserRequest;
 use App\Http\Requests\signinRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +18,13 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role_id = 2;
         $user->save();
         $token = $user->createToken('myapptoken')->plainTextToken;
+        $role = Role::find($user->role_id);
         $response = [
             'user' => $user,
+            'role' => $role->role,
             'token' => $token
         ];
         return response($response,201);
@@ -33,8 +37,10 @@ class UserController extends Controller
             ]);
         }
         $token = $user->createToken('myapptoken')->plainTextToken;
+        $role = Role::find($user->role_id);
         $response = [
             'user' => $user,
+            'role' => $role->role,
             'token' => $token
         ];
         return response($response,201);

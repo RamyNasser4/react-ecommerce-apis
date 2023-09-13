@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        /* Schema::table('category_product', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
         });
-        Schema::rename('product_categories','category_product'); */
     }
 
     /**
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('category_product', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };
