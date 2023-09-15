@@ -84,5 +84,9 @@ class UserController extends Controller
         $img = base64_encode($cover_img);
         return response($img,201);
     }
+    public function getUserCount(){
+        $users = User::all();
+        return response(sizeof($users),201);
+    }
     
 }

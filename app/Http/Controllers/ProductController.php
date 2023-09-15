@@ -32,4 +32,8 @@ class ProductController extends Controller
                      'colors' =>$colors];
         return response($response,201);
     }
+    public function getProductCount(){
+        $products = Product::all();
+        return response(sizeof($products),201);
+    }
 }

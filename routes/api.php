@@ -27,10 +27,12 @@ Route::post('/signup',[UserController::class,'signup']);
 Route::post('/signin',[UserController::class,'signin']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/signout',[UserController::class,'signout']);
+    Route::get('/user/profile_img/{profilePath}',[UserController::class,'getProfilePic']);
+    Route::get('/user/cover_img/{coverPath}',[UserController::class,'getCoverPic']);
+    Route::get('/user/{id}',[UserController::class,'user']);
+    Route::post('/user/{id}/edit',[UserController::class,'edit']);
+    Route::get('/usercount',[UserController::class,'getUserCount'])->middleware('admin');
+    Route::get('/productcount',[ProductController::class,'getProductCount'])->middleware('admin');
 });
-Route::get('/user/profile_img/{profilePath}',[UserController::class,'getProfilePic']);
-Route::get('/user/cover_img/{coverPath}',[UserController::class,'getCoverPic']);
-Route::get('/user/{id}',[UserController::class,'user']);
-Route::post('/user/{id}/edit',[UserController::class,'edit']);
 
 
