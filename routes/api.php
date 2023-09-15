@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -33,6 +34,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/user/{id}/edit',[UserController::class,'edit']);
     Route::get('/usercount',[UserController::class,'getUserCount'])->middleware('admin');
     Route::get('/productcount',[ProductController::class,'getProductCount'])->middleware('admin');
+    Route::get('/colors',[ColorController::class,'colors'])->middleware('admin');
+    Route::post('/newproduct',[ProductController::class,'newproduct'])->middleware('admin');
 });
 
 
