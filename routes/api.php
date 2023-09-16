@@ -24,6 +24,7 @@ Route::get('/products',[ProductController::class,'products']);
 Route::get('/products/recommended',[ProductController::class,'recommended']);
 Route::get('/products/featured',[ProductController::class,'featured']);
 Route::get('/products/{id}',[ProductController::class,'product']);
+Route::get('/product/{imagepath}',[ProductController::class,'getProductImg']);
 Route::post('/signup',[UserController::class,'signup']);
 Route::post('/signin',[UserController::class,'signin']);
 Route::group(['middleware' => ['auth:sanctum']], function () {

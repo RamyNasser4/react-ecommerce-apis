@@ -61,4 +61,9 @@ class ProductController extends Controller
                       'colors' => $colors];
         return response($response);
     }
+    public function getProductImg($imagepath){
+        $image = Storage::get("products/".$imagepath);
+        $img = base64_encode($image);
+        return response("data:image/png;base64,".$img);
+    }
 }
