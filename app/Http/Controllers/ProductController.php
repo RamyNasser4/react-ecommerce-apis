@@ -115,4 +115,7 @@ class ProductController extends Controller
                       'colors' => $colors];
         return response($response);              
     }
+    public function deleteProduct($id){
+        return Product::destroy($id);
+    }
 }
