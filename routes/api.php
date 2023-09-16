@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/productcount',[ProductController::class,'getProductCount'])->middleware('admin');
     Route::get('/colors',[ColorController::class,'colors'])->middleware('admin');
     Route::post('/newproduct',[ProductController::class,'newproduct'])->middleware('admin');
+    Route::post('/editproduct/{id}',[ProductController::class,'editProduct'])->middleware('admin');
 });
 
 

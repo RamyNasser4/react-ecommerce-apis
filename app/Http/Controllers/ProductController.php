@@ -79,4 +79,40 @@ class ProductController extends Controller
                       'colors' => $colors];
         return response($response);
     }
+    public function editProduct($id,Request $request){
+        $product = Product::find($id);
+        if($request->name){
+            $product->name = $request->name;
+        }
+        if($request->collection_name){
+            $product->collection_name = $request->collection_name;
+        }
+        if($request->image){
+            $imagepath = Storage::putFile('products',$request->image);
+            $product->image = explode("/",$imagepath)[1];
+        }
+        if($request->price){
+            $product->price = $request->price;
+        }
+        if($request->details){
+            $product->details = $request->details;
+        }
+        $product->save();
+        if($request->colors){
+            $request->colors = json_decode($request->colors);
+            foreach($request->colors as $color){
+                $colorproduct = ColorProduct::where('color_id',$color)->where('product_id',$product->id)->exists();
+                if($colorproduct === false){
+                    $colorproduct = new ColorProduct();
+                    $colorproduct->product_id = $product->id;
+                    $colorproduct->color_id = $color;
+                    $colorproduct->save();
+                }
+            }
+        }
+        $colors = Product::where('id',$product->id)->first()->colors;
+        $response = ['product' => $product,
+                      'colors' => $colors];
+        return response($response);              
+    }
 }
