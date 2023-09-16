@@ -47,7 +47,8 @@ class User extends Authenticatable
         return $this->hasOne(Role::class);
     }
     public function isAdmin(){
-        if($this->role_id == 1){
+        $role = Role::find($this->role_id);
+        if($role->role == "admin"){
             return true;
         }else{
             return false;
