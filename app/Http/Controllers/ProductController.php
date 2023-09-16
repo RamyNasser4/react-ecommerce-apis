@@ -16,20 +16,38 @@ class ProductController extends Controller
         $colors = array();
         foreach($products as $product){
             array_push($colors,$product->colors->first());
+            if(!str_starts_with($product->image,"http")){
+                $product->image = "data:image/png;base64,". base64_encode(Storage::get("products/".$product->image));
+            }
         }
         return response(['products' => $products,
                          'colors' => $colors],201);
     }
     public function recommended(){
         $recommendedproducts = Category::where('category_name','Recommended')->first()->products;
+        foreach($recommendedproducts as $product){
+            if(!str_starts_with($product->image,"http")){
+                $product->image = "data:image/png;base64,". base64_encode(Storage::get("products/".$product->image));
+            }
+        }
         return response($recommendedproducts,201);
     }
     public function featured(){
         $featuredproducts = Category::where('category_name','Featured')->first()->products;
+        foreach($featuredproducts as $product){
+            if(!str_starts_with($product->image,"http")){
+                $product->image = "data:image/png;base64,". base64_encode(Storage::get("products/".$product->image));
+            }
+        }
         return response($featuredproducts,201);
     }
     public function product($id){
         $product = Product::find($id);
+        if(!str_starts_with($product->image,"http")){
+            $product->image = ["data:image/png;base64,". base64_encode(Storage::get("products/".$product->image))];
+        }else{
+            $product->image = explode(",",$product->image);
+        }
         $colors = Product::where('id',$id)->first()->colors;
         $response = ['product' => $product,
                      'colors' =>$colors];
@@ -60,10 +78,5 @@ class ProductController extends Controller
         $response = ['product' => $product,
                       'colors' => $colors];
         return response($response);
-    }
-    public function getProductImg($imagepath){
-        $image = Storage::get("products/".$imagepath);
-        $img = base64_encode($image);
-        return response("data:image/png;base64,".$img);
     }
 }

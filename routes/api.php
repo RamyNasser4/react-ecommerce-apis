@@ -24,13 +24,13 @@ Route::get('/products',[ProductController::class,'products']);
 Route::get('/products/recommended',[ProductController::class,'recommended']);
 Route::get('/products/featured',[ProductController::class,'featured']);
 Route::get('/products/{id}',[ProductController::class,'product']);
-Route::get('/product/{imagepath}',[ProductController::class,'getProductImg']);
+/* Route::get('/product/{imagepath}',[ProductController::class,'getProductImg']); */
 Route::post('/signup',[UserController::class,'signup']);
 Route::post('/signin',[UserController::class,'signin']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/signout',[UserController::class,'signout']);
-    Route::get('/user/profile_img/{profilePath}',[UserController::class,'getProfilePic']);
-    Route::get('/user/cover_img/{coverPath}',[UserController::class,'getCoverPic']);
+    /* Route::get('/user/profile_img/{profilePath}',[UserController::class,'getProfilePic']);
+    Route::get('/user/cover_img/{coverPath}',[UserController::class,'getCoverPic']); */
     Route::get('/user/{id}',[UserController::class,'user']);
     Route::post('/user/{id}/edit',[UserController::class,'edit']);
     Route::get('/usercount',[UserController::class,'getUserCount'])->middleware('admin');

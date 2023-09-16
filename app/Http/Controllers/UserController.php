@@ -53,6 +53,12 @@ class UserController extends Controller
     }
     public function user($id){
         $user = User::find($id);
+        if(!str_starts_with($user->profile_img,"http")){
+            $user->profile_img = "data:image/png;base64,". base64_encode(Storage::get("profile_img/" .$user->profile_img));
+        }
+        if(!str_starts_with($user->cover_img,"http")){
+            $user->cover_img = "data:image/png;base64,". base64_encode(Storage::get("cover_img/" .$user->cover_img));
+        }
         return response($user,201);
     }
     public function edit($id,editUserRequest $request){
@@ -72,7 +78,7 @@ class UserController extends Controller
         $user->save();
         return response($user,201);
     }
-    public function getProfilePic($profilePath){
+    /* public function getProfilePic($profilePath){
         $profile_img =  Storage::get("profile_img/" .$profilePath);
         $img = base64_encode($profile_img);
         return response("data:image/png;base64,".$img,201);
@@ -81,7 +87,7 @@ class UserController extends Controller
         $cover_img =  Storage::get("cover_img/" .$coverPath);
         $img = base64_encode($cover_img);
         return response("data:image/png;base64,".$img,201);
-    }
+    } */
     public function getUserCount(){
         $users = User::all();
         return response(sizeof($users),201);
