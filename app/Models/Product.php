@@ -15,6 +15,6 @@ class Product extends Model
         return $this->belongsToMany(Color::class);
     }
     public function categories(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 }

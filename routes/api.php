@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/usercount',[UserController::class,'getUserCount'])->middleware('admin');
     Route::get('/productcount',[ProductController::class,'getProductCount'])->middleware('admin');
     Route::get('/colors',[ColorController::class,'colors'])->middleware('admin');
+    Route::get('/categories',[CategoryController::class,'categories'])->middleware('admin');
     Route::post('/newproduct',[ProductController::class,'newproduct'])->middleware('admin');
     Route::post('/editproduct/{id}',[ProductController::class,'editProduct'])->middleware('admin');
     Route::delete('/deleteproduct/{id}',[ProductController::class,'deleteProduct'])->middleware('admin');

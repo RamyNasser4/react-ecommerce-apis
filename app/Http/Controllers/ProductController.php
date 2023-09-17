@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\addProductRequest;
 use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Models\ColorProduct;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -49,8 +51,10 @@ class ProductController extends Controller
             $product->image = explode(",",$product->image);
         }
         $colors = Product::where('id',$id)->first()->colors;
+        $categories = Product::where('id',$id)->first()->categories;
         $response = ['product' => $product,
-                     'colors' =>$colors];
+                     'colors' =>$colors,
+                     'categories' => $categories];
         return response($response,201);
     }
     public function getProductCount(){
@@ -74,9 +78,19 @@ class ProductController extends Controller
                 $colorproduct->save();
             }
         }
+        if($request->categories){
+            foreach($request->categories as $category){
+                $categoryproduct = new CategoryProduct();
+                $categoryproduct->product_id = $product->id;
+                $categoryproduct->category_id = $category;
+                $categoryproduct->save();
+            }
+        }
         $colors = Product::where('id',$product->id)->first()->colors;
+        $categories = Product::where('id',$product->id)->first()->categories;
         $response = ['product' => $product,
-                      'colors' => $colors];
+                      'colors' => $colors,
+                      'categories' => $categories];
         return response($response);
     }
     public function editProduct($id,Request $request){
@@ -109,10 +123,48 @@ class ProductController extends Controller
                     $colorproduct->save();
                 }
             }
+            $colorproducts = ColorProduct::where('product_id',$product->id)->get();
+            foreach($colorproducts as $colorproduct){
+                $exists = false;
+                foreach($request->colors as $color){
+                    if($colorproduct->color_id == $color){
+                        $exists = true;
+                    }
+                }
+                if(!$exists){
+                    $colorproduct->delete();
+                }
+            }
+        }
+        if($request->categories){
+            $request->categories = json_decode($request->categories);
+            foreach($request->categories as $category){
+                $categoryproduct = CategoryProduct::where('category_id',$category)->where('product_id',$product->id)->exists();
+                if($categoryproduct === false){
+                    $categoryproduct = new CategoryProduct();
+                    $categoryproduct->product_id = $product->id;
+                    $categoryproduct->category_id = $category;
+                    $categoryproduct->save();
+                }
+            }
+            $categoryproducts = CategoryProduct::where('product_id',$product->id)->get();
+            foreach($categoryproducts as $categoryproduct){
+                $exists = false;
+                foreach($request->categories as $category){
+                    if($categoryproduct->category_id == $category){
+                        $exists = true;
+                    }
+                }
+                if(!$exists){
+                    $categoryproduct->delete();
+                }
+            }
         }
         $colors = Product::where('id',$product->id)->first()->colors;
+        $categories = Product::where('id',$product->id)->first()->categories;
         $response = ['product' => $product,
-                      'colors' => $colors];
+                      'colors' => $colors,
+                      'categories' => $categories];
         return response($response);              
     }
     public function deleteProduct($id){
