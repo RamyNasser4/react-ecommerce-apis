@@ -129,6 +129,7 @@ class ProductController extends Controller
                 foreach($request->colors as $color){
                     if($colorproduct->color_id == $color){
                         $exists = true;
+                        break;
                     }
                 }
                 if(!$exists){
@@ -153,6 +154,7 @@ class ProductController extends Controller
                 foreach($request->categories as $category){
                     if($categoryproduct->category_id == $category){
                         $exists = true;
+                        break;
                     }
                 }
                 if(!$exists){
