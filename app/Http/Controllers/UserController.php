@@ -78,16 +78,6 @@ class UserController extends Controller
         $user->save();
         return response($user,201);
     }
-    /* public function getProfilePic($profilePath){
-        $profile_img =  Storage::get("profile_img/" .$profilePath);
-        $img = base64_encode($profile_img);
-        return response("data:image/png;base64,".$img,201);
-    }
-    public function getCoverPic($coverPath){
-        $cover_img =  Storage::get("cover_img/" .$coverPath);
-        $img = base64_encode($cover_img);
-        return response("data:image/png;base64,".$img,201);
-    } */
     public function getUserCount(){
         $users = User::all();
         return response(sizeof($users),201);

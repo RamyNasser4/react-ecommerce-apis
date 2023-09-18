@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\CategoryProduct;
 use App\Models\ColorProduct;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
